@@ -1,20 +1,22 @@
-from pytube import YouTube
+import yt_dlp
 
-# URL del video de YouTube
 video_url = "https://www.youtube.com/watch?v=y29kmnhjtc8"
 
-# Crear un objeto YouTube
-yt = YouTube(video_url)
+# # Opciones de configuración para descargar solo el audio (MP3)
+# ydl_opts = {
+#     'format': 'bestaudio/best',  # Seleccionar el mejor audio disponible
+#     'postprocessors': [{
+#         'key': 'FFmpegAudio',  # Usar FFmpeg para convertir el archivo
+#         'preferredcodec': 'mp3',  # Convertir el audio a MP3
+#         'preferredquality': '192',  # Calidad de 192 kbps
+#     }],
+#     'outtmpl': 'downloads/%(title)s.%(ext)s',  # Ruta donde se guardará el archivo MP3
+# }
 
-# Mostrar información del video
-print(f"Título: {yt.title}")
-print(f"Duración: {yt.length} segundos")
-print(f"Autor: {yt.author}")
+ydl_opts = {
+    'format': 'best',
+    'outtmpl': 'c:/Users/ASUS/Downloads/%(title)s.%(ext)s',  # Cambia la ruta si es necesario
+}
 
-# Seleccionar la mejor resolución disponible
-video_stream = yt.streams.get_highest_resolution()
-
-# Descargar el video
-print("Descargando...")
-video_stream.download(output_path="downloads")  # Cambia la ruta si lo deseas
-print("Descarga completada.")
+with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+    ydl.download([video_url])
