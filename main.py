@@ -36,9 +36,9 @@ def main(page: ft.Page):
             ft.TextButton("Está bien", on_click=handle_close),
         ],
         actions_alignment=ft.MainAxisAlignment.END,
-        on_dismiss=lambda e: page.add(
-            ft.Text("Modal dialog dismissed"),
-        ),
+        # on_dismiss=lambda e: page.add(
+        #     ft.Text("Modal dialog dismissed"),
+        # ),
     )
 
     def descargar(event):
@@ -57,7 +57,7 @@ def main(page: ft.Page):
         ft.ResponsiveRow(
             [
                 ft.Container(
-                    ft.TextField(label="Youtube Url", ref=txt_url_id),
+                    ft.TextField(label="Youtube Url", ref=txt_url_id, autofocus=True),
                     padding=5,
                     bgcolor=ft.Colors.WHITE,
                     col={"sm": 9, "md": 9, "xl": 9},
