@@ -24,10 +24,29 @@ def main(page: ft.Page):
         return "https://www.youtube.com/watch?v=" in url
         """
     
+    def handle_close(e):
+        dlg_modal.open = False
+        page.update()
+
+    dlg_modal = ft.AlertDialog(
+        modal=True,
+        title=ft.Text("Advertencia"),
+        content=ft.Text("L aUrl ingresada no es una URL valida para YouTube"), 
+        actions=[
+            ft.TextButton("Está bien", on_click=handle_close),
+        ],
+        actions_alignment=ft.MainAxisAlignment.END,
+        on_dismiss=lambda e: page.add(
+            ft.Text("Modal dialog dismissed"),
+        ),
+    )
+
     def descargar(event):
         url_id = txt_url_id.current.value
         if not es_url_YT(url_id):
-            ft.notify("URL no válida. Debe ser de un video de YouTube.")
+            page.dialog = dlg_modal
+            dlg_modal.open = True
+            page.update()
             return
         # Descargar video
         print(url_id)
