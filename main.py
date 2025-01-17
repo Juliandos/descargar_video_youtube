@@ -28,7 +28,11 @@ def main(page: ft.Page):
         ),
         ft.ResponsiveRow(
             [
-                ft.TextField(label="TextField 1", col={"md": 4})
+                ft.Container(
+                    ft.ProgressBar(),
+                    padding=5,
+                    col={"sm": 1, "md": 1, "xl": 1},
+                )
             ],
             run_spacing={"xs": 10},
         ),
