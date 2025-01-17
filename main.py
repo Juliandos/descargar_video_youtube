@@ -1,4 +1,5 @@
 import flet as ft
+import yt_dlp
 
 def main(page: ft.Page):
     # def page_resize(e): # sirve para ver las dimensiones de la página
@@ -10,21 +11,21 @@ def main(page: ft.Page):
     # pw = ft.Text(bottom=50, right=50, style="displaySmall")
     # page.overlay.append(pw)
 
-    def es_url_YT(url):
-        """
-        Verifica si la URL es de un video de YouTube
+    # def es_url_YT(url):
+    #     """
+    #     Verifica si la URL es de un video de YouTube
         
-        Args:
-            url (str): La URL a verificar
+    #     Args:
+    #         url (str): La URL a verificar
             
-        Returns:
-            bool: True si es una URL de un video de YouTube, False en caso contrario
-        "
-        return "https://www.youtube.com/watch?v=" in url
-        return "https://www.youtube.com/watch?v=" in url
-        """
+    #     Returns:
+    #         bool: True si es una URL de un video de YouTube, False en caso contrario
+    #     "
+    #     """
+    #     return "https://www.youtube.com/watch?v=" in url
+    #     return "https://www.youtube.com/watch?v=" in url
     
-    def handle_close(e):
+    def handle_close(yy):
         dlg_modal.open = False
         page.update()
 
@@ -41,15 +42,39 @@ def main(page: ft.Page):
         # ),
     )
 
-    def descargar(event):
+    def descargar_video(url):
+        """
+        Descarga un video de YouTube a MP3
+        
+        """
+        # # Opciones de configuración para descargar solo el audio (MP3)
+        # ydl_opts = {
+        #     'format': 'bestaudio/best',  # Seleccionar el mejor audio disponible
+        #     'postprocessors': [{
+        #         'key': 'FFmpegAudio',  # Usar FFmpeg para convertir el archivo
+        #         'preferredcodec': 'mp3',  # Convertir el audio a MP3
+        #         'preferredquality': '192',  # Calidad de 192 kbps
+        #     }],
+        #     'outtmpl': 'downloads/%(title)s.%(ext)s',  # Ruta donde se guardará el archivo MP3
+        # }
+
+        ydl_opts = {
+            'format': 'best',
+            'outtmpl': 'c:/Users/ASUS/Downloads/%(title)s.%(ext)s',  # Cambia la ruta si es necesario
+        }
+
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+
+    def descargar(e):
         url_id = txt_url_id.current.value
-        if not es_url_YT(url_id):
+        if not "https://www.youtube.com/watch?v=" in url_id:
             page.dialog = dlg_modal
             dlg_modal.open = True
             page.update()
             return
-        # Descargar video
-        print(url_id)
+        
+        descargar_video(url_id)
 
     txt_url_id= ft.Ref[ft.TextField]()
 
@@ -83,28 +108,6 @@ def main(page: ft.Page):
     )
     # page_resize(None)
 
-ft.app(target=main)
+if __name__ == "__main__":
+    ft.app(target=main)
 
-
-# import yt_dlp
-
-# video_url = "https://www.youtube.com/watch?v=y29kmnhjtc8"
-
-# # # Opciones de configuración para descargar solo el audio (MP3)
-# # ydl_opts = {
-# #     'format': 'bestaudio/best',  # Seleccionar el mejor audio disponible
-# #     'postprocessors': [{
-# #         'key': 'FFmpegAudio',  # Usar FFmpeg para convertir el archivo
-# #         'preferredcodec': 'mp3',  # Convertir el audio a MP3
-# #         'preferredquality': '192',  # Calidad de 192 kbps
-# #     }],
-# #     'outtmpl': 'downloads/%(title)s.%(ext)s',  # Ruta donde se guardará el archivo MP3
-# # }
-
-# ydl_opts = {
-#     'format': 'best',
-#     'outtmpl': 'c:/Users/ASUS/Downloads/%(title)s.%(ext)s',  # Cambia la ruta si es necesario
-# }
-
-# with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-#     ydl.download([video_url])
