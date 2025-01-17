@@ -1,22 +1,76 @@
-import yt_dlp
+import flet as ft
 
-video_url = "https://www.youtube.com/watch?v=y29kmnhjtc8"
+def main(page: ft.Page):
+    def page_resize(e):
+        pw.value = f"{page.width} px"
+        pw.update()
 
-# # Opciones de configuración para descargar solo el audio (MP3)
+    page.on_resize = page_resize
+
+    pw = ft.Text(bottom=50, right=50, style="displaySmall")
+    page.overlay.append(pw)
+    page.add(
+        ft.ResponsiveRow(
+            [
+                ft.Container(
+                    ft.Text("Column 1"),
+                    padding=5,
+                    bgcolor=ft.Colors.YELLOW,
+                    col={"sm": 6, "md": 4, "xl": 2},
+                ),
+                ft.Container(
+                    ft.Text("Column 2"),
+                    padding=5,
+                    bgcolor=ft.Colors.GREEN,
+                    col={"sm": 6, "md": 4, "xl": 2},
+                ),
+                ft.Container(
+                    ft.Text("Column 3"),
+                    padding=5,
+                    bgcolor=ft.Colors.BLUE,
+                    col={"sm": 6, "md": 4, "xl": 2},
+                ),
+                ft.Container(
+                    ft.Text("Column 4"),
+                    padding=5,
+                    bgcolor=ft.Colors.PINK_300,
+                    col={"sm": 6, "md": 4, "xl": 2},
+                ),
+            ],
+        ),
+        ft.ResponsiveRow(
+            [
+                ft.TextField(label="TextField 1", col={"md": 4}),
+                ft.TextField(label="TextField 2", col={"md": 4}),
+                ft.TextField(label="TextField 3", col={"md": 4}),
+            ],
+            run_spacing={"xs": 10},
+        ),
+    )
+    page_resize(None)
+
+ft.app(target=main)
+
+
+# import yt_dlp
+
+# video_url = "https://www.youtube.com/watch?v=y29kmnhjtc8"
+
+# # # Opciones de configuración para descargar solo el audio (MP3)
+# # ydl_opts = {
+# #     'format': 'bestaudio/best',  # Seleccionar el mejor audio disponible
+# #     'postprocessors': [{
+# #         'key': 'FFmpegAudio',  # Usar FFmpeg para convertir el archivo
+# #         'preferredcodec': 'mp3',  # Convertir el audio a MP3
+# #         'preferredquality': '192',  # Calidad de 192 kbps
+# #     }],
+# #     'outtmpl': 'downloads/%(title)s.%(ext)s',  # Ruta donde se guardará el archivo MP3
+# # }
+
 # ydl_opts = {
-#     'format': 'bestaudio/best',  # Seleccionar el mejor audio disponible
-#     'postprocessors': [{
-#         'key': 'FFmpegAudio',  # Usar FFmpeg para convertir el archivo
-#         'preferredcodec': 'mp3',  # Convertir el audio a MP3
-#         'preferredquality': '192',  # Calidad de 192 kbps
-#     }],
-#     'outtmpl': 'downloads/%(title)s.%(ext)s',  # Ruta donde se guardará el archivo MP3
+#     'format': 'best',
+#     'outtmpl': 'c:/Users/ASUS/Downloads/%(title)s.%(ext)s',  # Cambia la ruta si es necesario
 # }
 
-ydl_opts = {
-    'format': 'best',
-    'outtmpl': 'c:/Users/ASUS/Downloads/%(title)s.%(ext)s',  # Cambia la ruta si es necesario
-}
-
-with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-    ydl.download([video_url])
+# with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+#     ydl.download([video_url])
