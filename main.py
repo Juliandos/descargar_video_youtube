@@ -9,17 +9,24 @@ def main(page: ft.Page):
 
     # pw = ft.Text(bottom=50, right=50, style="displaySmall")
     # page.overlay.append(pw)
+
+    def descargar(event):
+        url_id = txt_url_id.current.value
+        print(url_id)
+
+    txt_url_id= ft.Ref[ft.TextField]()
+
     page.add(
         ft.ResponsiveRow(
             [
                 ft.Container(
-                    ft.TextField(label="Youtube Url"),
+                    ft.TextField(label="Youtube Url", ref=txt_url_id),
                     padding=5,
                     bgcolor=ft.Colors.WHITE,
                     col={"sm": 9, "md": 9, "xl": 9},
                 ),
                 ft.Container(
-                    ft.FilledButton("Descargar", icon="download"),
+                    ft.FilledButton("Descargar", icon="download", on_click= descargar),
                     padding=5,
                     # bgcolor=ft.Colors.GREEN,
                     col={"sm": 6, "md": 4, "xl": 2},
@@ -37,7 +44,7 @@ def main(page: ft.Page):
             run_spacing={"xs": 10},
         ),
     )
-    page_resize(None)
+    # page_resize(None)
 
 ft.app(target=main)
 
