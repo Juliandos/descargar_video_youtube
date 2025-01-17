@@ -10,8 +10,26 @@ def main(page: ft.Page):
     # pw = ft.Text(bottom=50, right=50, style="displaySmall")
     # page.overlay.append(pw)
 
+    def es_url_YT(url):
+        """
+        Verifica si la URL es de un video de YouTube
+        
+        Args:
+            url (str): La URL a verificar
+            
+        Returns:
+            bool: True si es una URL de un video de YouTube, False en caso contrario
+        "
+        return "https://www.youtube.com/watch?v=" in url
+        return "https://www.youtube.com/watch?v=" in url
+        """
+    
     def descargar(event):
         url_id = txt_url_id.current.value
+        if not es_url_YT(url_id):
+            ft.notify("URL no válida. Debe ser de un video de YouTube.")
+            return
+        # Descargar video
         print(url_id)
 
     txt_url_id= ft.Ref[ft.TextField]()
